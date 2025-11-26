@@ -4,6 +4,7 @@ import cors from "cors";
 const app = express();
 loadEnvFile();
 const PORT = process.env.PORT;
+const TEST = process.env.TEST;
 
 app.use(express.json(), cors());
 
@@ -13,4 +14,5 @@ app.get("/api/hello", (req, res) => {
 
 app.listen(PORT, () => {
   console.log("Server running on port", PORT);
+  console.log(TEST);
 });
