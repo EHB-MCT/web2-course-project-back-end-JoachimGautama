@@ -21,5 +21,6 @@ app.get("/api/hello", (req, res) => {
 
 app.listen(PORT, () => {
   console.log("Server running on port", PORT);
+  console.log("test commit");
   console.log(TEST);
 });
