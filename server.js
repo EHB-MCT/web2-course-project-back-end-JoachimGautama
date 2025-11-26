@@ -16,6 +16,7 @@ app.use(express.json(), cors());
 
 app.get("/api/hello", (req, res) => {
   res.json({ message: "Hello World" });
+  console.log("request at api/hello");
 });
 
 app.listen(PORT, () => {
