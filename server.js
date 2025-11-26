@@ -6,7 +6,7 @@ const app = express();
 try {
   loadEnvFile();
 } catch (err) {
-  console.log("nope");
+  console.log("loadEnv failed ", err);
 }
 
 const PORT = process.env.PORT || 3000;
