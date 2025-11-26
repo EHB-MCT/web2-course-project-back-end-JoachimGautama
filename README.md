@@ -21,3 +21,8 @@ List **ALL your used sources** here:
 It's not enough to only list the sources here, also add the sources to the top of the files in which you used them and indicate the specific parts of the code which are not your own (by writing comments and refering to the correct source(s)). \
 IF you use a source as the base/start for a file, then first place the source in the file and **COMMIT it IMMEDIATELY, BEFORE** adding your own code or modifying it. \
 **ALWAYS** use concise BUT CLEAR commit messages!
+
+## note to self
+
+`git push origin testInProd:main`  
+best command ever
