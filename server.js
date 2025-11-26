@@ -3,7 +3,12 @@ import { loadEnvFile } from "process";
 import cors from "cors";
 
 const app = express();
-loadEnvFile();
+try {
+  loadEnvFile();
+} catch (err) {
+  console.log("nope");
+}
+
 const PORT = process.env.PORT || 3000;
 const TEST = process.env.TEST || "no env present";
 
