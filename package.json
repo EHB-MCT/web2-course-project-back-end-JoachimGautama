@@ -1,0 +1,23 @@
+{
+  "name": "web2-course-project-back-end-joachimgautama",
+  "version": "1.0.0",
+  "description": "[![Open in Codespaces](https://classroom.github.com/assets/launch-codespace-2972f46106e565e64193e422d61a12cf1da4916b45550586e14ef0a7c637dd04.svg)](https://classroom.github.com/open-in-codespaces?assignment_repo_id=21581365)\r # Your project name ✨\r A short description of your project. Aim for 2-3 lines. \\",
+  "homepage": "https://github.com/EHB-MCT/web2-course-project-back-end-JoachimGautama#readme",
+  "bugs": {
+    "url": "https://github.com/EHB-MCT/web2-course-project-back-end-JoachimGautama/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EHB-MCT/web2-course-project-back-end-JoachimGautama.git"
+  },
+  "license": "ISC",
+  "author": "Joachim Gautama",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
