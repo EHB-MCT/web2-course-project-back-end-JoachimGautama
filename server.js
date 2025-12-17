@@ -1,6 +1,7 @@
 import express from "express";
 import { loadEnvFile } from "process";
 import cors from "cors";
+import { MongoClient, ServerApiVersion } from "mongodb";
 
 const app = express();
 try {
@@ -10,7 +11,20 @@ try {
 }
 
 const PORT = process.env.PORT || 3000;
-const TEST = process.env.TEST || "no env present";
+const PASSWORD = process.env.PASSWORD;
+const NAME = process.env.NAME;
+const HOST = process.env.HOST;
+const APP = process.env.APP;
+
+const url = `mongodb+srv://${NAME}:${PASSWORD}@${HOST}/${APP}?appName=characters`;
+// code from mongodb example
+const client = new MongoClient(url, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  },
+});
 
 app.use(express.json(), cors());
 
@@ -21,6 +35,4 @@ app.get("/api/hello", (req, res) => {
 
 app.listen(PORT, () => {
   console.log("Server running on port", PORT);
-  console.log("test commit");
-  console.log(TEST);
 });
