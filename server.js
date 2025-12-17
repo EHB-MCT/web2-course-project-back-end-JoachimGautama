@@ -1,8 +1,7 @@
-// mongodb connection from mongodb
 import express from "express";
 import { loadEnvFile } from "process";
 import cors from "cors";
-import { MongoClient, ServerApiVersion } from "mongodb";
+import { MongoClient } from "mongodb";
 
 const app = express();
 try {
@@ -20,7 +19,7 @@ const APP = process.env.APP;
 const url = `mongodb+srv://${NAME}:${PASSWORD}@${HOST}/${APP}?appName=characters`;
 const client = new MongoClient(url);
 
-app.use(express.json(), cors());
+app.use(express.json(), cors(), express.urlencoded({ extended: true }));
 
 app.get("/api/hello", (req, res) => {
   res.json({ message: "Hello World" });
