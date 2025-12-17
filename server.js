@@ -1,3 +1,4 @@
+// mongodb connection from mongodb
 import express from "express";
 import { loadEnvFile } from "process";
 import cors from "cors";
