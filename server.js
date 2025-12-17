@@ -18,14 +18,7 @@ const HOST = process.env.HOST;
 const APP = process.env.APP;
 
 const url = `mongodb+srv://${NAME}:${PASSWORD}@${HOST}/${APP}?appName=characters`;
-// code from mongodb example
-const client = new MongoClient(url, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
-});
+const client = new MongoClient(url);
 
 app.use(express.json(), cors());
 
