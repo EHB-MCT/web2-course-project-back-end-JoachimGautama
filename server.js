@@ -1,5 +1,4 @@
 // MongoDB CRUD manual was used to complete this code
-
 import express from "express";
 import { loadEnvFile } from "process";
 import cors from "cors";
@@ -26,7 +25,9 @@ app.use(express.json(), cors(), express.urlencoded({ extended: true }));
 
 app.post("/auth/characters", async (req, res) => {
   const { id, name } = req.body;
+
   try {
+    await client.connect();
     const mdb = client.db("spellSheet");
     const collection = mdb.collection("characters");
 
@@ -39,7 +40,8 @@ app.post("/auth/characters", async (req, res) => {
       });
     }
 
-    if (id !== requestedChar._id) {
+    const reqID = requestedChar._id.toString();
+    if (id !== reqID) {
       return res.status(401).json({
         error: "Disguise self failed",
         field: "code",
