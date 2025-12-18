@@ -32,7 +32,7 @@ app.post("/auth/characters", async (req, res) => {
   const mdb = client.db("spellSheet");
   const collection = db.collection("characters");
 
-  const character = await collection.findA;
+  const character = await collection.findAll;
   res.send();
 });
 
