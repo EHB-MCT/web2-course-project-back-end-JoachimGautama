@@ -25,7 +25,7 @@ app.use(express.json(), cors(), express.urlencoded({ extended: true }));
 
 app.post("/auth/characters", async (req, res) => {
   const { id, name } = req.body;
-
+  console.log("auth request");
   try {
     await client.connect();
     const mdb = client.db("spellSheet");
@@ -53,6 +53,7 @@ app.post("/auth/characters", async (req, res) => {
       character: requestedChar,
     });
   } catch (error) {
+    console.log(error.message);
     return res.status(500).json({
       error: "Server rolled a 1!",
       message: error.message,
