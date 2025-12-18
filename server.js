@@ -24,11 +24,6 @@ const client = new MongoClient(url);
 
 app.use(express.json(), cors(), express.urlencoded({ extended: true }));
 
-app.get("/api/hello", (req, res) => {
-  res.json({ message: "Hello World" });
-  console.log("request at api/hello");
-});
-
 app.post("/auth/characters", async (req, res) => {
   const { id, name } = req.body;
   try {
