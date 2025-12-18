@@ -25,7 +25,7 @@ app.use(express.json(), cors(), express.urlencoded({ extended: true }));
 
 app.post("/auth/characters", async (req, res) => {
   const { id, name } = req.body;
-
+  console.log("auth request");
   try {
     await client.connect();
     const mdb = client.db("spellSheet");
