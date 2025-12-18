@@ -16,7 +16,8 @@ I recommend checking the status or waking up the server by clicking the live on 
 
 List **ALL your used sources** here:
 
--
+- [Gemini mongodb crash course](https://gemini.google.com/share/0b389e068088)
+  - no code directly given
 
 It's not enough to only list the sources here, also add the sources to the top of the files in which you used them and indicate the specific parts of the code which are not your own (by writing comments and refering to the correct source(s)). \
 IF you use a source as the base/start for a file, then first place the source in the file and **COMMIT it IMMEDIATELY, BEFORE** adding your own code or modifying it. \

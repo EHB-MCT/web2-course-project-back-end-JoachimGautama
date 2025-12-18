@@ -7,7 +7,7 @@ const app = express();
 try {
   loadEnvFile();
 } catch (err) {
-  console.log("loadEnv failed ", err);
+  console.log("loadEnv failed: ", err);
 }
 
 const PORT = process.env.PORT || 3000;
@@ -15,8 +15,9 @@ const PASSWORD = process.env.PASSWORD;
 const NAME = process.env.NAME;
 const HOST = process.env.HOST;
 const APP = process.env.APP;
+const APPNAME = process.env.APPNAME;
 
-const url = `mongodb+srv://${NAME}:${PASSWORD}@${HOST}/${APP}?appName=characters`;
+const url = `mongodb+srv://${NAME}:${PASSWORD}@${HOST}/${APP}?appName=${APPNAME}`;
 const client = new MongoClient(url);
 
 app.use(express.json(), cors(), express.urlencoded({ extended: true }));
@@ -24,6 +25,15 @@ app.use(express.json(), cors(), express.urlencoded({ extended: true }));
 app.get("/api/hello", (req, res) => {
   res.json({ message: "Hello World" });
   console.log("request at api/hello");
+});
+
+app.post("/auth/characters", async (req, res) => {
+  const { id, name } = req.body;
+  const mdb = client.db("spellSheet");
+  const collection = db.collection("characters");
+
+  const character = await collection.findA;
+  res.send();
 });
 
 app.listen(PORT, () => {
