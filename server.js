@@ -20,17 +20,18 @@ const APPNAME = process.env.APPNAME;
 
 const url = `mongodb+srv://${NAME}:${PASSWORD}@${HOST}/${APP}?appName=${APPNAME}`;
 const client = new MongoClient(url);
+const collection = client.db("spellSheet").collection("characters");
 
 app.use(express.json(), cors(), express.urlencoded({ extended: true }));
+
+app.post("/characters", async (req, res) => {
+  const data = req.body;
+});
 
 app.post("/auth/characters", async (req, res) => {
   const { id, name } = req.body;
   console.log("auth request");
   try {
-    await client.connect();
-    const mdb = client.db("spellSheet");
-    const collection = mdb.collection("characters");
-
     const requestedChar = await collection.findOne({ name: name });
 
     if (!requestedChar) {
