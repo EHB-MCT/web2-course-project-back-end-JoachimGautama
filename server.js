@@ -53,6 +53,7 @@ app.post("/auth/characters", async (req, res) => {
       character: requestedChar,
     });
   } catch (error) {
+    console.log(error.message);
     return res.status(500).json({
       error: "Server rolled a 1!",
       message: error.message,
