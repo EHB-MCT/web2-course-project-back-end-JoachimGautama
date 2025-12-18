@@ -1,3 +1,5 @@
+// MongoDB CRUD manual was used to complete this code
+
 import express from "express";
 import { loadEnvFile } from "process";
 import cors from "cors";
@@ -29,11 +31,36 @@ app.get("/api/hello", (req, res) => {
 
 app.post("/auth/characters", async (req, res) => {
   const { id, name } = req.body;
-  const mdb = client.db("spellSheet");
-  const collection = db.collection("characters");
+  try {
+    const mdb = client.db("spellSheet");
+    const collection = mdb.collection("characters");
 
-  const character = await collection.findAll;
-  res.send();
+    const requestedChar = await collection.findOne({ name: name });
+
+    if (!requestedChar) {
+      return res.status(404).json({
+        error: "NAT 1 perception!",
+        field: "name",
+      });
+    }
+
+    if (id !== requestedChar._id) {
+      return res.status(401).json({
+        error: "Disguise self failed",
+        field: "code",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      character: requestedChar,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Server rolled a 1!",
+      message: error.message,
+    });
+  }
 });
 
 app.listen(PORT, () => {
