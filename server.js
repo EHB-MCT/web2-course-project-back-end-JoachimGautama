@@ -26,20 +26,47 @@ const collection = client.db("spellSheet").collection("characters");
 app.use(express.json(), cors(), express.urlencoded({ extended: true }));
 
 app.post("/characters", async (req, res) => {
+  const classesEnum = z.enum([
+    "Artificer",
+    "Barbarian",
+    "Bard",
+    "Cleric",
+    "Druid",
+    "Fighter",
+    "Monk",
+    "Paladin",
+    "Ranger",
+    "Rogue",
+    "Sorcerer",
+    "Warlock",
+    "Wizard",
+  ]); // code from zod documentation https://zod.dev/api#enums
+  const zodSchema = z.object({
+    name: z.string(),
+    class: classesEnum,
+    level: z.number().gte(1).lte(20),
+    spellSlots: z.array(z.int().lte(4)),
+    stats: z.object({
+      STR: z.number(),
+      DEX: z.number(),
+      CON: z.number(),
+      INT: z.number(),
+      WIS: z.number(),
+      CHA: z.number(),
+    }),
+    spellList: z.array(z.string()),
+  });
+
   const data = req.body;
 
   try {
-    try{
-      const FishEnum = z.enum(["Salmon", "Tuna", "Trout"]); // code from zod documentation https://zod.dev/api#enums
-      data = z.object({
-      name: z.string(),
-      class: 
-    })
-    } catch (error){
+    try {
+      zodSchema.parse(data);
+    } catch (error) {
       return res.status(422).json({
         error: "Oops! Reroll that intelligence check!",
-        message: error.message
-      })
+        message: error.message,
+      });
     }
     const response = await collection.insertOne(data);
     res.status(200).json({
