@@ -1,8 +1,8 @@
 import express from "express";
 import { loadEnvFile } from "process";
 import cors from "cors";
-import { MongoClient } from "mongodb";
-import * as z from "zod";
+import { MongoClient, ObjectId } from "mongodb";
+import { Check } from "./Check.js";
 
 const app = express();
 
@@ -26,42 +26,11 @@ const collection = client.db("spellSheet").collection("characters");
 app.use(express.json(), cors(), express.urlencoded({ extended: true }));
 
 app.post("/characters", async (req, res) => {
-  const classesEnum = z.enum([
-    "Artificer",
-    "Barbarian",
-    "Bard",
-    "Cleric",
-    "Druid",
-    "Fighter",
-    "Monk",
-    "Paladin",
-    "Ranger",
-    "Rogue",
-    "Sorcerer",
-    "Warlock",
-    "Wizard",
-  ]); // code from zod documentation https://zod.dev/api#enums
-  const zodSchema = z.object({
-    name: z.string(),
-    class: classesEnum,
-    level: z.number().gte(1).lte(20),
-    spellSlots: z.array(z.int().lte(4)),
-    stats: z.object({
-      STR: z.number(),
-      DEX: z.number(),
-      CON: z.number(),
-      INT: z.number(),
-      WIS: z.number(),
-      CHA: z.number(),
-    }),
-    spellList: z.array(z.string()),
-  });
-
   const data = req.body;
 
   try {
     try {
-      zodSchema.parse(data);
+      Check.checkCharacter(data);
     } catch (error) {
       return res.status(422).json({
         error: "Oops! Reroll that intelligence check!",
@@ -69,13 +38,18 @@ app.post("/characters", async (req, res) => {
       });
     }
     const response = await collection.insertOne(data);
+    const id = new ObjectId(response.insertedId.toString());
+
+    const char = await collection.findOne({ _id: id });
+    console.log(char);
+
     res.status(200).json({
       success: true,
-      character: response,
+      character: char,
     });
   } catch (error) {
     res.status(500).json({
-      error: "Server rolled a nat 1!",
+      error: "Server rolled a 1!",
       message: error.message,
     });
   }
