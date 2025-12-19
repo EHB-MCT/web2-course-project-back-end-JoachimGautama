@@ -1,7 +1,7 @@
 import * as z from "zod";
 
-export default class Zod {
-  checkCharacter(data) {
+export class Check {
+  static checkCharacter(data) {
     const classesEnum = z.enum([
       "Artificer",
       "Barbarian",

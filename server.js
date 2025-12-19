@@ -2,7 +2,7 @@ import express from "express";
 import { loadEnvFile } from "process";
 import cors from "cors";
 import { MongoClient } from "mongodb";
-import * as z from "./Zod.js";
+import { Check } from "./Check.js";
 
 const app = express();
 
@@ -30,7 +30,7 @@ app.post("/characters", async (req, res) => {
 
   try {
     try {
-      z.checkCharacter(data);
+      Check.checkCharacter(data);
     } catch (error) {
       return res.status(422).json({
         error: "Oops! Reroll that intelligence check!",
