@@ -30,6 +30,7 @@ app.post("/characters", async (req, res) => {
 
   try {
     try{
+      const FishEnum = z.enum(["Salmon", "Tuna", "Trout"]); // code from zod documentation https://zod.dev/api#enums
       data = z.object({
       name: z.string(),
       class: 
