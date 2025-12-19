@@ -1,7 +1,7 @@
 import express from "express";
 import { loadEnvFile } from "process";
 import cors from "cors";
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 import { Check } from "./Check.js";
 
 const app = express();
@@ -38,13 +38,18 @@ app.post("/characters", async (req, res) => {
       });
     }
     const response = await collection.insertOne(data);
+    const id = new ObjectId(response.insertedId.toString());
+
+    const char = await collection.findOne({ _id: id });
+    console.log(char);
+
     res.status(200).json({
       success: true,
-      character: response,
+      character: char,
     });
   } catch (error) {
     res.status(500).json({
-      error: "Server rolled a nat 1!",
+      error: "Server rolled a 1!",
       message: error.message,
     });
   }
