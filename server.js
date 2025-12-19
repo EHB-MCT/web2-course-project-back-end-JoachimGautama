@@ -1,10 +1,11 @@
-// MongoDB CRUD manual was used to complete this code
 import express from "express";
 import { loadEnvFile } from "process";
 import cors from "cors";
 import { MongoClient } from "mongodb";
+import * as z from "zod";
 
 const app = express();
+
 try {
   loadEnvFile();
 } catch (err) {
@@ -26,6 +27,30 @@ app.use(express.json(), cors(), express.urlencoded({ extended: true }));
 
 app.post("/characters", async (req, res) => {
   const data = req.body;
+
+  try {
+    try{
+      data = z.object({
+      name: z.string(),
+      class: 
+    })
+    } catch (error){
+      return res.status(422).json({
+        error: "Oops! Reroll that intelligence check!",
+        message: error.message
+      })
+    }
+    const response = await collection.insertOne(data);
+    res.status(200).json({
+      success: true,
+      character: response,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: "Server rolled a nat 1!",
+      message: error.message,
+    });
+  }
 });
 
 app.post("/auth/characters", async (req, res) => {
