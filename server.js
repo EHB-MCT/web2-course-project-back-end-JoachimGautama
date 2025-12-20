@@ -89,6 +89,29 @@ app.post("/auth/characters", async (req, res) => {
   }
 });
 
+app.delete("/characters/:id", async (req, res) => {
+  const id = new ObjectId(req.params.id);
+  console.log(id);
+  try {
+    const result = await collection.findOneAndDelete({ _id: id });
+    if (!result)
+      return res.status(404).json({
+        success: false,
+        message: "Must have rolled a perfect stealth check!",
+      });
+
+    return res.status(200).json({
+      success: true,
+      message: `${result.name} was successfully slain!`,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server rolled a 1!",
+    });
+  }
+});
+
 app.get("/pingMe", (req, res) => {
   return res.status(200).json({
     message: "ha-ha-ha-ha stayin' alive!",
@@ -98,7 +121,7 @@ app.get("/pingMe", (req, res) => {
 app.listen(PORT, () => {
   console.log("Server running on port", PORT);
 });
-//
+
 async function keepAlive() {
   try {
     const res = await fetch("https://spellsheet.onrender.com/pingMe");
@@ -109,5 +132,4 @@ async function keepAlive() {
   }
 }
 
-// 60000
 setInterval(keepAlive, 60000);
