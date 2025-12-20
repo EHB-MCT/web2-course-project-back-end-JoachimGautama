@@ -109,5 +109,4 @@ async function keepAlive() {
   }
 }
 
-// 60000
 setInterval(keepAlive, 60000);
