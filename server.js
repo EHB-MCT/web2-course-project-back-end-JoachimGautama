@@ -89,6 +89,25 @@ app.post("/auth/characters", async (req, res) => {
   }
 });
 
+app.get("/pingMe", (req, res) => {
+  return res.status(200).json({
+    message: "ha-ha-ha-ha stayin' alive!",
+  });
+});
+
 app.listen(PORT, () => {
   console.log("Server running on port", PORT);
 });
+//
+async function keepAlive() {
+  try {
+    const res = await fetch("https://spellsheet.onrender.com/pingMe");
+    const msg = await res.text();
+    console.log(msg);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// 60000
+setInterval(keepAlive, 60000);
