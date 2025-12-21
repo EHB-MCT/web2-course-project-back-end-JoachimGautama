@@ -41,7 +41,6 @@ app.post("/characters", async (req, res) => {
     const id = new ObjectId(response.insertedId.toString());
 
     const char = await collection.findOne({ _id: id });
-    console.log(char);
 
     res.status(200).json({
       success: true,
@@ -89,9 +88,31 @@ app.post("/auth/characters", async (req, res) => {
   }
 });
 
+app.patch("/characters", async (req, res) => {
+  try {
+    const fields = req.body;
+    const id = new ObjectId(fields.id);
+
+    const exists = collection.findOne({ _id: id });
+    if (!exists)
+      return res
+        .status(404)
+        .json({ message: "Must have rolled perfect stealth!" });
+
+    let updates = {};
+    for (const key in fields) {
+      if (key !== "id") updates[key] = fields[key];
+    }
+
+    await collection.updateOne({ _id: id }, { $set: updates });
+    res.status(200).json({ success: true, message: "Update successful." });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "server rolled a 1!" });
+  }
+});
+
 app.delete("/characters/:id", async (req, res) => {
   const id = new ObjectId(req.params.id);
-  console.log(id);
   try {
     const result = await collection.findOneAndDelete({ _id: id });
     if (!result)
